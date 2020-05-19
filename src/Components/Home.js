@@ -33,7 +33,7 @@ class Home extends React.Component {
           <TouchableOpacity
           onPress={()=>{
               this.setState({
-                  toggleLogin:false
+                  toggleLogin:!this.state.toggleLogin
               })
           }}
           >
