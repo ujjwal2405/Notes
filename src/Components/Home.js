@@ -15,9 +15,9 @@ class Home extends React.Component {
   constructor(props){
     super(props)
     this.state={
-      toggleLogin:true,
+      toggleRender:true,
       loginText:"Login",
-      signupText:"Signup"
+      signupText:"Sign Up"
     }
   }
   render() {
@@ -26,26 +26,26 @@ class Home extends React.Component {
         <View style={styles.loginView}>
           <TouchableOpacity>
           <Text style={styles.loginText}>
-           {this.state.toggleLogin?this.state.loginText:this.state.signupText}
+           {this.state.toggleRender?this.state.loginText:this.state.signupText}
           </Text>
           </TouchableOpacity>
           
           <TouchableOpacity
           onPress={()=>{
               this.setState({
-                  toggleLogin:!this.state.toggleLogin
+                  toggleRender:!this.state.toggleRender
               })
           }}
           >
           <Text style={styles.signupText}> 
-          {this.state.toggleLogin?this.state.signupText:this.state.loginText}
+          {this.state.toggleRender?this.state.signupText:this.state.loginText}
           </Text>
           </TouchableOpacity>
         
      
         </View>
 
-        {this.state.toggleLogin? <Login/> : <Signup/>}
+        {this.state.toggleRender? <Login/> : <Signup/>}
 
       </SafeAreaView>
     );
