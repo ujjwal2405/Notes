@@ -9,7 +9,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {connect} from 'react-redux';
+
+import {signupData} from '../Services/Signup/action'
+
 class SignUp extends React.Component {
+  constructor(props){
+    super(props)
+    this.state={
+      email:'',
+      username:'',
+      password:'',
+      phoneNumber:''
+    }
+  }
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -27,15 +40,21 @@ class SignUp extends React.Component {
         </View>
 
         <View style={styles.credentialView}>
-          <TextInput placeholder="Email Address" />
+          <TextInput placeholder="Email Address" 
+           onChangeText={txt => this.setState({email: txt})}
+          />
         </View>
 
         <View style={styles.credentialView}>
-          <TextInput placeholder="Username" />
+          <TextInput placeholder="Username" 
+          onChangeText={txt => this.setState({username: txt})}
+          />
         </View>
 
         <View style={styles.passwordView}>
-          <TextInput placeholder="Password" secureTextEntry={true} />
+          <TextInput placeholder="Password" secureTextEntry={true} 
+          onChangeText={txt => this.setState({password: txt})}
+          />
 
           <TouchableOpacity>
             <Image source={require('../Assets/eye.png')} />
@@ -50,7 +69,22 @@ class SignUp extends React.Component {
           </TouchableOpacity>
         </View>
 
-            <TouchableOpacity>
+        <View style={styles.credentialView}>
+          <TextInput placeholder="Phone Number" 
+          onChangeText={txt => this.setState({phoneNumber: txt})}
+          />
+        </View>
+
+            <TouchableOpacity
+             onPress={() => {
+              this.props.signupList(
+                this.state.email,
+                this.state.username,
+                this.state.password,
+                this.state.phoneNumber
+              );
+            }}
+            >
         <View
           style={styles.logView}>
           <Image source={require('../Assets/tick.png')} />
@@ -144,4 +178,17 @@ const styles = StyleSheet.create({
       color:"grey"
   }
 });
-export default SignUp;
+
+const mapStateToProps = state => ({
+  data:state.signupReducer.signupdata
+});
+
+const mapDispatchToProps = {
+ signupList:signupData
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SignUp);
+
