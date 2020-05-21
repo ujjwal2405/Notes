@@ -7,19 +7,45 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import Signup from './SignUp'
+
+import {connect} from 'react-redux';
+import {loginData} from '../Services/Login/action';
+import { and } from 'react-native-reanimated';
 
 class Login extends React.Component {
-  constructor(props){
-    super(props)
-   
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      secure:true
+    };
   }
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
-       
 
+Authenticate=()=>{
+  const {username,password}=this.state
+  const {success}=this.props
+
+ 
+// if(success && (username='') && (password='')){
+//   Alert.alert("Blank Data")
+// }
+if(success){
+  return(
+    Alert.alert("Your Login is Successful")
+  )
+  
+}
+
+  else
+  Alert.alert("Wrong Credentials")
+}
+
+  render() {
+    return (  
+      <SafeAreaView style={styles.container}>
         <View style={styles.profilePicture}>
           <Image
             source={require('../Assets/Default.png')}
@@ -32,44 +58,55 @@ class Login extends React.Component {
         </View>
 
         <View style={styles.credentialView}>
-          <TextInput placeholder="Username or Email Address" />
+          <TextInput
+            placeholder="Username"
+            onChangeText={txt => this.setState({username: txt})}
+          />
         </View>
 
         <View style={styles.passwordView}>
           <View>
-          <TextInput placeholder="Password" 
-          secureTextEntry={true}
-          />
-        </View>
-
-        <View>
-          <TouchableOpacity>
-            <Image source={require('../Assets/eye.png')}
-            style={{marginRight:0}} 
+            <TextInput
+              placeholder="Password"
+              secureTextEntry={this.state.secure}
+              onChangeText={txt => this.setState({password: txt})}
             />
-          </TouchableOpacity>
+          </View>
+
+          <View>
+            <TouchableOpacity
+            onPress={()=>{
+              this.setState({
+                secure:!this.state.secure
+              })
+            }}
+            >
+              <Image
+                source={require('../Assets/eye.png')}
+                style={{marginRight: 0}}
+              />
+            </TouchableOpacity>
           </View>
         </View>
-            <TouchableOpacity>
-        <View
-          style={styles.logView}>
-          <Image source={require('../Assets/tick.png')} />
+        <TouchableOpacity
+          onPress={() => {
+            this.props.loginList(this.state.username, this.state.password),this.Authenticate();
+          }}>
+          <View style={styles.logView}>
+            <Image source={require('../Assets/tick.png')} />
 
-          <Text
-            style={{
-              color: 'blue',
-              marginLeft: 20,
-            }}>
-            LOG IN
-          </Text>
+            <Text
+              style={{
+                color: 'blue',
+                marginLeft: 20,
+              }}>
+              LOG IN
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <View style={styles.loginwithView}>
+          <Text style={styles.loginwithText}>Login with</Text>
         </View>
-        </TouchableOpacity> 
-            <View style={styles.loginwithView}>
-                <Text style={styles.loginwithText}>
-                    Login with
-                </Text>
-            </View>
-
       </SafeAreaView>
     );
   }
@@ -115,11 +152,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
     borderBottomColor: 'grey',
     borderBottomWidth: 1,
-    padding:10
-  
-    
+    padding: 10,
   },
-  logView:{
+  logView: {
     paddingVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -137,13 +172,28 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 30,
   },
-  loginwithView:{
-      marginTop:70,
-      justifyContent:"center",
-      alignItems:"center"
+  loginwithView: {
+    marginTop: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  loginwithText:{
-      color:"grey"
-  }
+  loginwithText: {
+    color: 'grey',
+  },
 });
-export default Login;
+
+const mapStateToProps = state => ({
+  // data:state.signupReducer.signupdata
+  loading: state.loginReducer.loading,
+  success: state.loginReducer.loginSuccess,
+  fail:state.loginReducer.loginFail
+});
+
+const mapDispatchToProps = {
+  loginList: loginData,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Login);

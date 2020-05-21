@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -20,9 +21,16 @@ class SignUp extends React.Component {
       email:'',
       username:'',
       password:'',
-      phoneNumber:''
+      phoneNumber:'',
+      test:''
     }
   }
+
+  // validateEmail = email => {
+  //   var re = /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
+  //   return re.test(email);
+  //   };
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -42,6 +50,7 @@ class SignUp extends React.Component {
         <View style={styles.credentialView}>
           <TextInput placeholder="Email Address" 
            onChangeText={txt => this.setState({email: txt})}
+
           />
         </View>
 
@@ -75,6 +84,8 @@ class SignUp extends React.Component {
           />
         </View>
 
+
+
             <TouchableOpacity
              onPress={() => {
               this.props.signupList(
@@ -82,7 +93,7 @@ class SignUp extends React.Component {
                 this.state.username,
                 this.state.password,
                 this.state.phoneNumber
-              );
+              )
             }}
             >
         <View
@@ -180,7 +191,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  data:state.signupReducer.signupdata
+  // data:state.signupReducer.signupdata
 });
 
 const mapDispatchToProps = {
@@ -192,3 +203,15 @@ export default connect(
   mapDispatchToProps,
 )(SignUp);
 
+
+
+   {/* <TextInput
+style={{flex:1,height: 40}}
+onChangeText={(test) => {
+this.setState({test},()=>{
+if (!this.validateEmail(this.state.test)) {
+Alert.alert('Invalid email')
+}
+})
+}}
+/> */}

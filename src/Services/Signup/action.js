@@ -16,7 +16,7 @@ export const signupData = (email,username,password,phoneNumber) => dispatch => {
         return response.json();
       })
       .then(responseJson => {
-          console.log(responseJson)
+          console.log("response of SIgnup data",responseJson)
         dispatch({
           type: SIGNUP_DATA,
           data: responseJson,

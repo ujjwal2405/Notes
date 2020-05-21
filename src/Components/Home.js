@@ -4,8 +4,6 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  Image,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 import Signup from './SignUp'
