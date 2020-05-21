@@ -1,6 +1,12 @@
+import{SIGNUP_DATA} from './constant'
+
+import config from '../../Config/env';
+
+let signupApi=config.apiConfig.addUserApi
+
 export const signupData = (email,username,password,phoneNumber) => dispatch => {
    fetch(
-      'https://nodejsapp20.herokuapp.com/api/users',
+      signupApi,
       {
         method: 'POST',
         headers: {Accept: 'application/json', 'content-type': 'application/json'},

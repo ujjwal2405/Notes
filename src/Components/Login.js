@@ -12,7 +12,6 @@ import {
 
 import {connect} from 'react-redux';
 import {loginData} from '../Services/Login/action';
-import { and } from 'react-native-reanimated';
 
 class Login extends React.Component {
   constructor(props) {
@@ -20,31 +19,24 @@ class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
-      secure:true
+      secure: true,
     };
   }
 
-Authenticate=()=>{
-  const {username,password}=this.state
-  const {success}=this.props
+  Authenticate = () => {
+    const {username, password} = this.state;
+    const {success} = this.props;
 
- 
-// if(success && (username='') && (password='')){
-//   Alert.alert("Blank Data")
-// }
-if(success){
-  return(
-    Alert.alert("Your Login is Successful")
-  )
-  
-}
-
-  else
-  Alert.alert("Wrong Credentials")
-}
+    // if(success && (username='') && (password='')){
+    //   Alert.alert("Blank Data")
+    // }
+    if (success) {
+      return Alert.alert('Your Login is Successful');
+    } else Alert.alert('Wrong Credentials');
+  };
 
   render() {
-    return (  
+    return (
       <SafeAreaView style={styles.container}>
         <View style={styles.profilePicture}>
           <Image
@@ -75,12 +67,11 @@ if(success){
 
           <View>
             <TouchableOpacity
-            onPress={()=>{
-              this.setState({
-                secure:!this.state.secure
-              })
-            }}
-            >
+              onPress={() => {
+                this.setState({
+                  secure: !this.state.secure,
+                });
+              }}>
               <Image
                 source={require('../Assets/eye.png')}
                 style={{marginRight: 0}}
@@ -90,7 +81,8 @@ if(success){
         </View>
         <TouchableOpacity
           onPress={() => {
-            this.props.loginList(this.state.username, this.state.password),this.Authenticate();
+            this.props.loginList(this.state.username, this.state.password),
+              this.Authenticate();
           }}>
           <View style={styles.logView}>
             <Image source={require('../Assets/tick.png')} />
@@ -186,7 +178,7 @@ const mapStateToProps = state => ({
   // data:state.signupReducer.signupdata
   loading: state.loginReducer.loading,
   success: state.loginReducer.loginSuccess,
-  fail:state.loginReducer.loginFail
+  fail: state.loginReducer.loginFail,
 });
 
 const mapDispatchToProps = {

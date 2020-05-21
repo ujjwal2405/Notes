@@ -1,5 +1,8 @@
-import {TOGGLE_FLAG,LOGIN_FAIL,LOGIN_START,LOGIN_SUCCESS} from './constant'
+import {LOGIN_FAIL,LOGIN_START,LOGIN_SUCCESS} from './constant';
 
+import config from '../../Config/env';
+
+let authenticateApi=config.apiConfig.loginUserApi
 
 
 
@@ -8,7 +11,7 @@ export const loginData = (username,password) => dispatch =>{
      dispatch({
         type:LOGIN_START
     })
-    fetch('https://nodejsapp20.herokuapp.com/api/authenticate',
+    fetch(authenticateApi,
     {
       method: 'POST',
       headers: {Accept: 'application/json', 'content-type': 'application/json'},
