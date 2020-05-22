@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
-
+import {imageConstants} from '../Config/constant';
 import {signupData} from '../Services/Signup/action'
 
 class SignUp extends React.Component {
@@ -40,7 +40,7 @@ class SignUp extends React.Component {
 
         <View style={styles.profilePicture}>
           <Image
-            source={require('../Assets/Default.png')}
+            source={imageConstants.profile}
             style={{
               height: 100,
               width: 100,
@@ -74,7 +74,7 @@ class SignUp extends React.Component {
             })
           }}
           >
-            <Image source={require('../Assets/eye.png')} />
+            <Image source={imageConstants.eye} />
           </TouchableOpacity>
         </View>
 
@@ -88,7 +88,7 @@ class SignUp extends React.Component {
             })
           }}
           >
-            <Image source={require('../Assets/eye.png')} />
+            <Image source={imageConstants.eye} />
           </TouchableOpacity>
         </View>
 
@@ -112,7 +112,7 @@ class SignUp extends React.Component {
             >
         <View
           style={styles.logView}>
-          <Image source={require('../Assets/tick.png')} />
+          <Image source={imageConstants.tick} />
 
           <Text
             style={{

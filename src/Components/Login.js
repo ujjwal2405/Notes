@@ -12,6 +12,7 @@ import {
 
 import {connect} from 'react-redux';
 import {loginData} from '../Services/Login/action';
+import {imageConstants} from '../Config/constant';
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,12 +28,9 @@ class Login extends React.Component {
     const {username, password} = this.state;
     const {success} = this.props;
 
-
-
-    if (success&&username&&password) {
-       this.props.props.navigation.navigate('Notes')
-      return Alert.alert('Your Login is Successful')
-     ;
+    if (success && username && password) {
+      this.props.props.navigation.navigate('Notes');
+      return Alert.alert('Your Login is Successful');
     } else Alert.alert('Wrong Credentials');
   };
 
@@ -41,7 +39,7 @@ class Login extends React.Component {
       <SafeAreaView style={styles.container}>
         <View style={styles.profilePicture}>
           <Image
-            source={require('../Assets/Default.png')}
+            source={imageConstants.profile}
             style={{
               height: 100,
               width: 100,
@@ -73,10 +71,7 @@ class Login extends React.Component {
                   secure: !this.state.secure,
                 });
               }}>
-              <Image
-                source={require('../Assets/eye.png')}
-                style={{marginRight: 0}}
-              />
+              <Image source={imageConstants.eye} style={{marginRight: 0}} />
             </TouchableOpacity>
           </View>
         </View>
@@ -86,7 +81,7 @@ class Login extends React.Component {
               this.Authenticate();
           }}>
           <View style={styles.logView}>
-            <Image source={require('../Assets/tick.png')} />
+            <Image source={imageConstants.tick} />
 
             <Text
               style={{

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Signup from './SignUp'
 import Login from './Login'
+import {imageConstants} from '../Config/constant';
 
 class Home extends React.Component {
   constructor(props){
@@ -44,7 +45,7 @@ class Home extends React.Component {
      
         </View>
 
-        {this.state.toggleRender? <Login props={this.props}/> : <Signup propss={this.props}/>}
+        {this.state.toggleRender? <Login props={this.props}/> : <Signup props={this.props}/>}
 
       </SafeAreaView>
     );
