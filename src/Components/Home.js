@@ -19,6 +19,7 @@ class Home extends React.Component {
     }
   }
   render() {
+      console.log("Props of home screen",this.props)
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loginView}>
@@ -43,7 +44,7 @@ class Home extends React.Component {
      
         </View>
 
-        {this.state.toggleRender? <Login/> : <Signup/>}
+        {this.state.toggleRender? <Login props={this.props}/> : <Signup propss={this.props}/>}
 
       </SafeAreaView>
     );

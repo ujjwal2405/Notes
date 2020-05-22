@@ -17,8 +17,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: null,
+      password: null,
       secure: true,
     };
   }
@@ -27,11 +27,12 @@ class Login extends React.Component {
     const {username, password} = this.state;
     const {success} = this.props;
 
-    // if(success && (username='') && (password='')){
-    //   Alert.alert("Blank Data")
-    // }
-    if (success) {
-      return Alert.alert('Your Login is Successful');
+
+
+    if (success&&username&&password) {
+       this.props.props.navigation.navigate('Notes')
+      return Alert.alert('Your Login is Successful')
+     ;
     } else Alert.alert('Wrong Credentials');
   };
 

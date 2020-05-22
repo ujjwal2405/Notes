@@ -22,7 +22,9 @@ class SignUp extends React.Component {
       username:'',
       password:'',
       phoneNumber:'',
-      test:''
+      test:'',
+      secure:true,
+      secureRepeat:true
     }
   }
 
@@ -61,19 +63,31 @@ class SignUp extends React.Component {
         </View>
 
         <View style={styles.passwordView}>
-          <TextInput placeholder="Password" secureTextEntry={true} 
+          <TextInput placeholder="Password" secureTextEntry={this.state.secure} 
           onChangeText={txt => this.setState({password: txt})}
           />
 
-          <TouchableOpacity>
+          <TouchableOpacity
+           onPress={()=>{
+            this.setState({
+              secure:!this.state.secure
+            })
+          }}
+          >
             <Image source={require('../Assets/eye.png')} />
           </TouchableOpacity>
         </View>
 
         <View style={styles.passwordView}>
-          <TextInput placeholder="Repeat Password" secureTextEntry={true} />
+          <TextInput placeholder="Repeat Password" secureTextEntry={this.state.secureRepeat} />
 
-          <TouchableOpacity>
+          <TouchableOpacity
+          onPress={()=>{
+            this.setState({
+              secureRepeat:!this.state.secureRepeat
+            })
+          }}
+          >
             <Image source={require('../Assets/eye.png')} />
           </TouchableOpacity>
         </View>
