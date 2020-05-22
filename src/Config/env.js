@@ -4,6 +4,7 @@ const apiConfig = {
  
     loginUserApi: `${baseApiUrl}/authenticate/`,
     addUserApi: `${baseApiUrl}/users/`,
+    addDataApi:`${baseApiUrl}/notes/`
 
 };
 

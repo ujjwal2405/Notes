@@ -1,8 +1,13 @@
 import ADD_DATA from './constant'
+
+import config from '../../Config/env';
+
+let addDataApi=config.apiConfig.addDataApi
+
 export const addData = (title,data,loginId) => dispatch => {
   console.log("fetch se pehle vaala",title,data,loginId)
     fetch(
-      'https://nodejsapp20.herokuapp.com/api/notes/'+loginId,
+      addDataApi+loginId,
       {
         method: 'PUT',
         headers: {Accept: 'application/json', 'content-type': 'application/json'},
