@@ -26,11 +26,12 @@ export const loginData = (username,password) => dispatch =>{
 })
 .then(responseJson=>{
 
-    console.log("Response of responseJson",responseJson)
+    console.log("Response of responseJson",responseJson,responseJson.id)
 
 if(responseJson.status==true){
     dispatch({
-        type:LOGIN_SUCCESS
+        type:LOGIN_SUCCESS,
+        data:responseJson.id
     })
 }else{
     dispatch({

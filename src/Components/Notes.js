@@ -16,23 +16,11 @@ class Dark extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-        visible:false
+       
     }
   }
 
-  toggleModal =()=>{
-      console.warn("I am running")
-      console.warn(this.state.visible)
-    return (
-        <View>
-          <Modal isVisible={this.state.visible}>
-            <View style={{ height:200,width:500 ,backgroundColor:"red"}}>
-              <Text>I am the modal content!</Text>
-            </View>
-          </Modal>
-        </View>
-      )
-  }
+
 
   render() {
     return (
@@ -52,11 +40,7 @@ class Dark extends React.Component {
 
           <TouchableOpacity
           onPress={()=>{
-            
-              this.setState({
-                  visible:!this.state.visible
-                 
-              }),this.toggleModal()
+            this.props.navigation.navigate('AddData')
           }}
           >
           <View style={{marginRight:20}}>
@@ -82,7 +66,22 @@ class Dark extends React.Component {
           </Text>
         </View>
 
-        {/* <View style={{flex: 1,justifyContent: 'flex-end'}}>
+       
+      </SafeAreaView>
+    );
+  }
+}
+export default Dark;
+
+
+
+
+
+
+
+
+
+ {/* <View style={{flex: 1,justifyContent: 'flex-end'}}>
         <TouchableOpacity
         style={{width:'100%',height:40,backgroundColor:'red', 
         alignItems:'center',justifyContent:'center'}}
@@ -90,8 +89,20 @@ class Dark extends React.Component {
         <Text style={{color:'white', fontSize: 16}}>Bottom Button</Text>
         </TouchableOpacity>
         </View> */}
-      </SafeAreaView>
-    );
-  }
-}
-export default Dark;
+
+
+
+
+//   toggleModal =()=>{
+//       console.warn("I am running")
+//       console.warn(this.state.visible)
+//     return (
+//         <View>
+//           <Modal isVisible={this.state.visible}>
+//             <View style={{ height:200,width:500 ,backgroundColor:"red"}}>
+//               <Text>I am the modal content!</Text>
+//             </View>
+//           </Modal>
+//         </View>
+//       )
+//   }
