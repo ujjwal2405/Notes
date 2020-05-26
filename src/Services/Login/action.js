@@ -7,7 +7,7 @@ let authenticateApi=config.apiConfig.loginUserApi
 
 
 
-export const loginData = (username,password) => dispatch =>{
+export const loginData = (username,password,callback) => dispatch =>{
      dispatch({
         type:LOGIN_START
     })
@@ -28,18 +28,18 @@ export const loginData = (username,password) => dispatch =>{
 
     console.log("Response of responseJson",responseJson,responseJson.id,responseJson.status)
 
-if(responseJson.status==true){
+if(responseJson.status==false){
+    callback && callback(false, responseJson, null);
+}else {
+    callback && callback(true, responseJson, null);
+    console.log(responseJson.id);
     dispatch({
-        type:LOGIN_SUCCESS,
-        data:responseJson.id
-    })
-}else{
-    dispatch({
-        type:LOGIN_FAIL
-    })
-}
-
-})}
+      type: LOGIN_SUCCESS,
+      data: responseJson.id,
+    });
+  }
+});
+};
 
 
 

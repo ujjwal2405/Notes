@@ -22,9 +22,21 @@ class Login extends React.Component {
       username: null,
       password: null,
       secure: true,
+      usernameValidate:true
     };
   }
-
+  
+  validate(text, type) {
+    var reg = /^\S{4,}$/;
+    if (type === 'username') {
+      if (reg.test(text)) {
+        this.setState({usernameValidate: true});
+        this.setState({username: text});
+      } else {
+        this.setState({usernameValidate: false});
+      }
+    }
+  }
   
 
   render() {
@@ -44,12 +56,14 @@ class Login extends React.Component {
         <View style={styles.credentialView}>
           <TextInput
             placeholder="Username"
-            onChangeText={txt => this.setState({username: txt})}
+            onChangeText={text => {
+              this.validate(text, 'username');
+            }}
           />
         </View>
 
         <View style={styles.passwordView}>
-          <View>
+          <View style={{width:"100%"}}>
             <TextInput
               placeholder="Password"
               secureTextEntry={this.state.secure}
@@ -70,10 +84,17 @@ class Login extends React.Component {
         </View>
         <TouchableOpacity
           onPress={() => {
-            
-            this.Authenticate()
-           
-              ;
+            this.props.loginList(
+              this.state.username,
+              this.state.password,
+              (status) => {
+                if (status) {
+                  this.props.props.navigation.navigate('Notes');
+                } else {
+                  Alert.alert('Error', 'Wrong Credentials');
+                }
+              },
+            );
           }}>
           <View style={styles.logView}>
             <Image source={imageConstants.tick} />
