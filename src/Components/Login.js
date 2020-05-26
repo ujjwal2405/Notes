@@ -22,29 +22,22 @@ class Login extends React.Component {
       username: null,
       password: null,
       secure: true,
+      usernameValidate:true
     };
   }
-
-  Authenticate = () => {
-    const {username, password} = this.state;
-    const {loading,success}=this.props
-    
-    this.props.loginList(username,password)
   
-
-    console.log(success,loading)
-    if (success && loading) {
-
-      return(
-        <ActivityIndicator/>
-      )
+  validate(text, type) {
+    var reg = /^\S{4,}$/;
+    if (type === 'username') {
+      if (reg.test(text)) {
+        this.setState({usernameValidate: true});
+        this.setState({username: text});
+      } else {
+        this.setState({usernameValidate: false});
+      }
     }
-      else if(success){
-      this.props.props.navigation.navigate('Notes');
-      return Alert.alert('Your Login is Successful');
-    }
-    // else Alert.alert('Wrong Credentials');
-  };
+  }
+  
 
   render() {
     return (
@@ -63,7 +56,9 @@ class Login extends React.Component {
         <View style={styles.credentialView}>
           <TextInput
             placeholder="Username"
-            onChangeText={txt => this.setState({username: txt})}
+            onChangeText={text => {
+              this.validate(text, 'username');
+            }}
           />
         </View>
 
@@ -89,10 +84,17 @@ class Login extends React.Component {
         </View>
         <TouchableOpacity
           onPress={() => {
-            
-            this.Authenticate()
-           
-              ;
+            this.props.loginList(
+              this.state.username,
+              this.state.password,
+              (status) => {
+                if (status) {
+                  this.props.props.navigation.navigate('Notes');
+                } else {
+                  Alert.alert('Error', 'Wrong Credentials');
+                }
+              },
+            );
           }}>
           <View style={styles.logView}>
             <Image source={imageConstants.tick} />
