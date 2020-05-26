@@ -25,26 +25,7 @@ class Login extends React.Component {
     };
   }
 
-  Authenticate = () => {
-    const {username, password} = this.state;
-    const {loading,success}=this.props
-    
-    this.props.loginList(username,password)
   
-
-    console.log(success,loading)
-    if (success && loading) {
-
-      return(
-        <ActivityIndicator/>
-      )
-    }
-      else if(success){
-      this.props.props.navigation.navigate('Notes');
-      return Alert.alert('Your Login is Successful');
-    }
-    // else Alert.alert('Wrong Credentials');
-  };
 
   render() {
     return (
