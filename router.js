@@ -10,6 +10,7 @@ import store from './src/Services/rootreducer';
 import SignUp from './src/Components/SignUp';
 import Notes from './src/Components/Notes';
 import AddData from './src/Components/AddData'
+import Content from './src/Components/Content'
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -49,6 +50,11 @@ const MyStack = () => {
         name="AddData"
         component={AddData}
         options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="Content"
+        component={Content}
+      
       />
 
 

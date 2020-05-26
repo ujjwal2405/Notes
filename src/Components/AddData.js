@@ -18,7 +18,8 @@ class AddData extends React.Component {
     super(props);
     this.state = {
         title:"",
-        data:""
+        data:"",
+        message:""
     };
   }
 
@@ -57,7 +58,10 @@ class AddData extends React.Component {
 
           <TouchableOpacity
           onPress={()=>{
-              this.props.addDataList(title,data,loginId)
+              this.props.addDataList(title,data,loginId),
+              this.setState({
+                message:"Data Added"
+              })
           }}
           >
               <View style={{backgroundColor:"black",padding:20,justifyContent:"center",alignItems:"center",marginTop:25,marginHorizontal:70}}>
@@ -66,7 +70,11 @@ class AddData extends React.Component {
                   </Text>
               </View>
           </TouchableOpacity>
-
+              <View style={{
+                padding:20,justifyContent:"center",alignItems:"center",marginTop:25,marginHorizontal:70
+              }}>
+              <Text style={{color:"red"}}>{this.state.message}</Text>
+              </View>
       </SafeAreaView>
     );
   }

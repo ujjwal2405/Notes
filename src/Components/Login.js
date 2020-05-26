@@ -68,7 +68,7 @@ class Login extends React.Component {
         </View>
 
         <View style={styles.passwordView}>
-          <View>
+          <View style={{width:"100%"}}>
             <TextInput
               placeholder="Password"
               secureTextEntry={this.state.secure}
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'grey',
     borderBottomWidth: 1,
     padding: 10,
+    
   },
   logView: {
     paddingVertical: 20,

@@ -23,7 +23,15 @@ class Notes extends React.Component {
 //     this.props.displayDataList(this.props.loginId)
 // }
 
-
+// groupTitle=()=>{
+//     var apiData=this.props.data.response
+//    var result = apiData.reduce(function (r, a) {
+//         r[a.title] = r[a.title] || [];
+//         r[a.title].push(a);
+//         return r;
+//     }, Object.create(null));
+// console.log("Grouped",result)
+// }
 
 
   render() {
@@ -55,7 +63,7 @@ class Notes extends React.Component {
 
             <TouchableOpacity
             onPress={()=>{
-                this.props.displayDataList(this.props.loginId)
+                this.props.displayDataList(this.props.loginId)//this.groupTitle()
             }}
             >
 
@@ -80,7 +88,16 @@ class Notes extends React.Component {
               return (
                 <View style={{marginLeft:15,marginTop:20}}>
                     <View style={{padding:20}}>
-                    <TouchableOpacity>
+                   
+                    <TouchableOpacity
+                    onPress={()=>{
+                        this.props.navigation.navigate('Content',{
+                            title:item.title,
+                            data:item.data,
+                            time:item.createdDate
+                        })
+                    }}
+                    >
                     <Text style={{color:"blue",fontSize:25}}>{item.title}</Text>
                     </TouchableOpacity>
                     </View>
@@ -99,6 +116,7 @@ class Notes extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:"white"
   },
   hamburgerView: {
     flexDirection: 'row',
