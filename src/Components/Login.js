@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -26,12 +27,23 @@ class Login extends React.Component {
 
   Authenticate = () => {
     const {username, password} = this.state;
-    const {success} = this.props;
+    const {loading,success}=this.props
+    
+    this.props.loginList(username,password)
+  
 
-    if (success && username && password) {
+    console.log(success,loading)
+    if (success && loading) {
+
+      return(
+        <ActivityIndicator/>
+      )
+    }
+      else if(success){
       this.props.props.navigation.navigate('Notes');
       return Alert.alert('Your Login is Successful');
-    } else Alert.alert('Wrong Credentials');
+    }
+    // else Alert.alert('Wrong Credentials');
   };
 
   render() {
@@ -41,7 +53,7 @@ class Login extends React.Component {
           <Image
             source={imageConstants.profile}
             style={{
-              height: 100,
+              height: 100,  
               width: 100,
               borderRadius: 70,
             }}
@@ -77,8 +89,10 @@ class Login extends React.Component {
         </View>
         <TouchableOpacity
           onPress={() => {
-            this.props.loginList(this.state.username, this.state.password),
-              this.Authenticate();
+            
+            this.Authenticate()
+           
+              ;
           }}>
           <View style={styles.logView}>
             <Image source={imageConstants.tick} />
@@ -171,10 +185,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  // data:state.signupReducer.signupdata
   loading: state.loginReducer.loading,
   success: state.loginReducer.loginSuccess,
-  fail: state.loginReducer.loginFail,
+ 
 });
 
 const mapDispatchToProps = {

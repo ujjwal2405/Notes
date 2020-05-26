@@ -1,23 +1,33 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {
   View,
   SafeAreaView,
   StyleSheet,
   Text,
   Image,
-  TextInput,
   TouchableOpacity,
-  Alert,
+  FlatList
 } from 'react-native';
 import {imageConstants} from '../Config/constant';
 
-class Dark extends React.Component {
+import {connect} from 'react-redux';
+import {displayData} from '../Services/Notes/action';
+
+class Notes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+// componentDidMount(){
+//     this.props.displayDataList(this.props.loginId)
+// }
+
+
+
+
   render() {
+     console.log("Data inside Notes App",this.props.data.response)
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.hamburgerView}>
@@ -43,11 +53,44 @@ class Dark extends React.Component {
           </TouchableOpacity>
         </View>
 
+            <TouchableOpacity
+            onPress={()=>{
+                this.props.displayDataList(this.props.loginId)
+            }}
+            >
+
+            <Text>
+                Display Data
+            </Text>
+
+            </TouchableOpacity>
+
+
         <View style={styles.textView}>
           <Text style={styles.textStyle}>
             My <Text style={styles.textStyle}>Notes</Text>
+           
           </Text>
         </View>
+
+
+        <FlatList
+            data={this.props.data.response}
+            renderItem={({item}) => {
+              return (
+                <View style={{marginLeft:15,marginTop:20}}>
+                    <View style={{padding:20}}>
+                    <TouchableOpacity>
+                    <Text style={{color:"blue",fontSize:25}}>{item.title}</Text>
+                    </TouchableOpacity>
+                    </View>
+                   
+                </View>
+              );
+            }}
+            keyExtractor={item => item.id}
+          />
+        
       </SafeAreaView>
     );
   }
@@ -82,4 +125,19 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
 });
-export default Dark;
+
+
+const mapStateToProps = state => ({
+    loginId:state.loginReducer.loginId,
+    data:state.displayReducer.displayData
+  });
+  
+  const mapDispatchToProps = {
+    displayDataList: displayData,
+  };
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Notes);
+

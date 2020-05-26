@@ -2,7 +2,7 @@ import {LOGIN_START,LOGIN_SUCCESS,LOGIN_FAIL} from './constant';
 
 const initialState={
     loading:false,
-    loginSuccess:true,
+    loginSuccess:false,
     loginId:''
 }
 
@@ -14,7 +14,7 @@ const loginReducer = (state=initialState , action ={}) =>{
         }
         case LOGIN_SUCCESS:{
             // console.log("Login id of reducer",action.data)
-            return{...state,loginSuccess:true,loginId:action.data}
+            return{...state,loginSuccess:true,loginId:action.data,loading:false}
         }
         case LOGIN_FAIL:{
             return{...state,loginSuccess:false}

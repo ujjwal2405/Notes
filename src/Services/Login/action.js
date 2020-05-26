@@ -26,7 +26,7 @@ export const loginData = (username,password) => dispatch =>{
 })
 .then(responseJson=>{
 
-    console.log("Response of responseJson",responseJson,responseJson.id)
+    console.log("Response of responseJson",responseJson,responseJson.id,responseJson.status)
 
 if(responseJson.status==true){
     dispatch({
