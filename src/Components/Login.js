@@ -11,6 +11,12 @@ import {
   ActivityIndicator
 } from 'react-native';
 
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-community/google-signin';
+
 import {connect} from 'react-redux';
 import {loginData} from '../Services/Login/action';
 import {imageConstants} from '../Config/constant';
@@ -38,13 +44,33 @@ class Login extends React.Component {
     }
   }
   
+  signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log(userInfo)
+      // this.setState({ userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
+  componentDidMount(){
+    GoogleSignin.configure({
+     
+      webClientId: '410761975330-1nn0h3ek43n7nktm17q8ltv166i511u6.apps.googleusercontent.com'
+    })
+  }
 
   render() {
-  //  if(this.props.loading){
-  //    return(
-  //     <ActivityIndicator size="large" color="#0000ff" />
-  //    )
-  //  }
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.profilePicture}>
@@ -58,7 +84,7 @@ class Login extends React.Component {
           />
         </View>
 
-        <View style={[styles.credentialView,{borderBottomColor:this.state.usernameValidate?"green":"red"}]}>
+        <View style={[styles.credentialView,{borderBottomColor:this.state.usernameValidate?"grey":"red"}]}>
           <TextInput
             placeholder="Username"
             onChangeText={text => {
@@ -115,6 +141,14 @@ class Login extends React.Component {
         </TouchableOpacity>
         <View style={styles.loginwithView}>
           <Text style={styles.loginwithText}>Login with</Text>
+          <GoogleSigninButton
+    style={{ width: 192, height: 48 }}
+    size={GoogleSigninButton.Size.Wide}
+    color={GoogleSigninButton.Color.Dark}
+    onPress={()=>{
+      this.signIn()
+    }}
+    disabled={this.state.isSigninInProgress} />
         </View>
         
       </SafeAreaView>
