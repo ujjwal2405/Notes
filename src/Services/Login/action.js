@@ -2,7 +2,7 @@ import {LOGIN_FAIL,LOGIN_START,LOGIN_SUCCESS} from './constant';
 
 import config from '../../Config/env';
 
-let authenticateApi=config.apiConfig.loginUserApi
+let loginApi=config.apiConfig.loginUserApi
 
 
 
@@ -11,7 +11,7 @@ export const loginData = (username,password,callback) => dispatch =>{
      dispatch({
         type:LOGIN_START
     })
-    fetch(authenticateApi,
+    fetch(loginApi,
     {
       method: 'POST',
       headers: {Accept: 'application/json', 'content-type': 'application/json'},

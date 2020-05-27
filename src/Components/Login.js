@@ -40,6 +40,11 @@ class Login extends React.Component {
   
 
   render() {
+  //  if(this.props.loading){
+  //    return(
+  //     <ActivityIndicator size="large" color="#0000ff" />
+  //    )
+  //  }
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.profilePicture}>
@@ -53,7 +58,7 @@ class Login extends React.Component {
           />
         </View>
 
-        <View style={styles.credentialView}>
+        <View style={[styles.credentialView,{borderBottomColor:this.state.usernameValidate?"green":"red"}]}>
           <TextInput
             placeholder="Username"
             onChangeText={text => {
@@ -98,7 +103,6 @@ class Login extends React.Component {
           }}>
           <View style={styles.logView}>
             <Image source={imageConstants.tick} />
-
             <Text
               style={{
                 color: 'blue',
@@ -106,11 +110,13 @@ class Login extends React.Component {
               }}>
               LOG IN
             </Text>
-          </View>
+            </View>
+            {this.props.loading?  <ActivityIndicator size="large" color="#0000ff" />:null}
         </TouchableOpacity>
         <View style={styles.loginwithView}>
           <Text style={styles.loginwithText}>Login with</Text>
         </View>
+        
       </SafeAreaView>
     );
   }
@@ -145,7 +151,6 @@ const styles = StyleSheet.create({
   credentialView: {
     marginTop: 30,
     marginHorizontal: 50,
-    borderBottomColor: 'grey',
     borderBottomWidth: 1,
     padding: 10,
   },
