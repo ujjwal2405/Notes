@@ -23,15 +23,15 @@ class Notes extends React.Component {
 //     this.props.displayDataList(this.props.loginId)
 // }
 
-// groupTitle=()=>{
-//     var apiData=this.props.data.response
-//    var result = apiData.reduce(function (r, a) {
-//         r[a.title] = r[a.title] || [];
-//         r[a.title].push(a);
-//         return r;
-//     }, Object.create(null));
-// console.log("Grouped",result)
-// }
+groupTitle=()=>{
+    var apiData=this.props.data.response
+   var result = apiData.reduce(function (r, a) {
+        r[a.title] = r[a.title] || [];
+        r[a.title].push(a);
+        return r;
+    }, Object.create(null));
+console.log("Grouped",result)
+}
 
 
   render() {
@@ -63,7 +63,7 @@ class Notes extends React.Component {
 
             <TouchableOpacity
             onPress={()=>{
-                this.props.displayDataList(this.props.loginId)//this.groupTitle()
+                this.props.displayDataList(this.props.loginId),this.groupTitle()
             }}
             >
 

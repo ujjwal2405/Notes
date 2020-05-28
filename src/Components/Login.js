@@ -19,6 +19,7 @@ import {
 
 import {connect} from 'react-redux';
 import {loginData} from '../Services/Login/action';
+import {socialData} from '../Services/SocialLogin/action'
 import {imageConstants} from '../Config/constant';
 
 class Login extends React.Component {
@@ -48,6 +49,7 @@ class Login extends React.Component {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      this.props.socialData(userInfo.user.givenName,userInfo.user.email,userInfo.user.id)
       console.log(userInfo)
       // this.setState({ userInfo });
     } catch (error) {
@@ -234,6 +236,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loginList: loginData,
+  socialData:socialData
 };
 
 export default connect(
