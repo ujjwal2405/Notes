@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Signup from './SignUp'
 import Login from './Login'
-import {imageConstants} from '../Config/constant';
+
 
 class Home extends React.Component {
   constructor(props){
@@ -20,7 +20,6 @@ class Home extends React.Component {
     }
   }
   render() {
-      console.log("Props of home screen",this.props)
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loginView}>

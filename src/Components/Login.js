@@ -146,7 +146,7 @@ class Login extends React.Component {
             {this.props.loading?  <ActivityIndicator size="large" color="#0000ff" />:null}
         </TouchableOpacity>
         <View style={styles.loginwithView}>
-          <Text style={styles.loginwithText}>Login with</Text>
+          <Text style={styles.loginwithText}>OR</Text>
           <GoogleSigninButton
     style={{ width: 192, height: 48 }}
     size={GoogleSigninButton.Size.Wide}

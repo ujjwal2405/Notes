@@ -24,14 +24,40 @@ class SignUp extends React.Component {
       phoneNumber:'',
       test:'',
       secure:true,
-      secureRepeat:true
+      secureRepeat:true,
+      usernameValidation:true,
+      passwordValidation:true,
+      emailValidation:true
     }
   }
 
-  // validateEmail = email => {
-  //   var re = /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
-  //   return re.test(email);
-  //   };
+  validate(text, type) {
+    var userNameRegex = /^\S{4,}$/;
+    var passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    var emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    if (type === 'username') {
+      if (userNameRegex.test(text)) {
+        this.setState({usernameValidation: true});
+        this.setState({username: text});
+      } else {
+        this.setState({usernameValidation: false});
+      }
+    } else if (type === 'password') {
+      if (passwordRegex.test(text)) {
+        this.setState({passwordValidation: true});
+        this.setState({password: text});
+      } else {
+        this.setState({passwordValidation: false});
+      }
+    } else if (type === 'email') {
+      if (emailRegex.test(text)) {
+        this.setState({emailValidation: true});
+        this.setState({email: text});
+      } else {
+        this.setState({emailValidation: false});
+      }
+    }
+  }
 
   render() {
     return (
@@ -49,22 +75,23 @@ class SignUp extends React.Component {
           />
         </View>
 
-        <View style={styles.credentialView}>
+        <View style={[styles.credentialView,{borderBottomColor:this.state.emailValidation?"grey":"red"}]}>
           <TextInput placeholder="Email Address" 
-           onChangeText={txt => this.setState({email: txt})}
+           onChangeText={txt => this.validate(txt,'email')}
 
           />
         </View>
 
-        <View style={styles.credentialView}>
+        <View style={[styles.credentialView,{borderBottomColor:this.state.usernameValidation?"grey":"red"}]}>
           <TextInput placeholder="Username" 
-          onChangeText={txt => this.setState({username: txt})}
+          onChangeText={txt => this.validate(txt,'username')}
           />
         </View>
 
-        <View style={styles.passwordView}>
+        <View style={[styles.passwordView,{borderBottomColor:this.state.passwordValidation?"grey":"red"}]}>
           <TextInput placeholder="Password" secureTextEntry={this.state.secure} 
-          onChangeText={txt => this.setState({password: txt})}
+          onChangeText={txt => this.validate(txt,'password')}
+          style={{width:"100%"}}
           />
 
           <TouchableOpacity
@@ -79,7 +106,7 @@ class SignUp extends React.Component {
         </View>
 
         <View style={styles.passwordView}>
-          <TextInput placeholder="Repeat Password" secureTextEntry={this.state.secureRepeat} />
+          <TextInput placeholder="Repeat Password" secureTextEntry={this.state.secureRepeat} style={{width:"100%"}} />
 
           <TouchableOpacity
           onPress={()=>{

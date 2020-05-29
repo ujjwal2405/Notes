@@ -34,31 +34,18 @@ class Content extends React.Component {
     console.log('Content Screen', route.params.content[0].createdDate);
     return (
       <SafeAreaView style={styles.container}>
-        {/* <View style={styles.contentView}>
-          <Text style={styles.titleStyle}>{route.params.title}</Text>
-
-          <View style={styles.dataView}>
-            <Text style={{
-                color:"red"
-            }}>
-            {route.params.time}
-            </Text>
-            <Text style={{
-                color:"blue",
-                marginTop:30
-            }}>
-                {route.params.data}
-            </Text>
-          </View>
-        </View> */}
-
+       <View style={{marginTop:30,marginLeft:30}}>
+    <Text style={{color:"red",fontSize:50,fontWeight:"900"}}>{route.params.title}</Text>
+       </View>
         <FlatList
           data={route.params.content}
+          style={{marginTop:25}}
           renderItem={({item}) => {
             return (
+
               <View style={styles.dataView}>
-                <Text style={{color: 'red'}}>
-                  Created at {item.createdDate.slice(0, 10)}{' '}
+                <Text style={{color: 'red',fontWeight:"bold"}}>
+                  Created on {item.createdDate.slice(0, 10)}{' '}
                   <Text style={{color: 'blue'}}> at </Text>
                   {item.createdDate.slice(11, 19)}
                 </Text>

@@ -76,38 +76,13 @@ return result
         </View>
 
 
-        {/* <FlatList
-            data={this.props.data.response}
-            renderItem={({item}) => {
-              return (
-                <View style={{marginLeft:15,marginTop:20}}>
-                    <View style={{padding:20}}>
-                   
-                    <TouchableOpacity
-                    onPress={()=>{
-                        this.props.navigation.navigate('Content',{
-                            title:item.title,
-                            data:item.data,
-                            time:item.createdDate
-                        })
-                    }}
-                    >
-                    <Text style={{color:"blue",fontSize:25}}>{item.title}</Text>
-                    </TouchableOpacity>
-                    </View>
-                   
-                </View>
-              );
-            }}
-            keyExtractor={item => item.id}
-          /> */}
-
           <View style={{marginLeft:30,marginTop:40}}>
           <View style={styles.titleView}>
           <TouchableOpacity
           onPress={()=>{
             this.props.navigation.navigate('Content',{
-              content:this.groupTitle().Personal
+              content:this.groupTitle().Personal,
+              title:"Personal"
             })
           }}
           >
@@ -120,7 +95,8 @@ return result
           <TouchableOpacity
           onPress={()=>{
             this.props.navigation.navigate('Content',{
-              content:this.groupTitle().Work
+              content:this.groupTitle().Work,
+              title:"Work"
             })
           }}
           >
@@ -133,7 +109,8 @@ return result
           <TouchableOpacity
           onPress={()=>{
             this.props.navigation.navigate('Content',{
-              content:this.groupTitle().Ideas
+              content:this.groupTitle().Ideas,
+              title:"Ideas"
             })
           }}
           >
@@ -147,7 +124,8 @@ return result
           <TouchableOpacity
           onPress={()=>{
             this.props.navigation.navigate('Content',{
-              content:this.groupTitle().Lists
+              content:this.groupTitle().Lists,
+              title:"Lists"
             })
           }}
           >

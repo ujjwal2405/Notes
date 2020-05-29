@@ -24,9 +24,8 @@ function drawerNavigator() {
         width:200
       }}>
       <Drawer.Screen name="Notes" component={Notes} />
-      <Drawer.Screen name="Login" component={Login} />
-      <Drawer.Screen name="SignUp" component={SignUp} />
-    </Drawer.Navigator>
+      <Drawer.Screen name="Dark Mode" component={Login} />
+      </Drawer.Navigator>
   );
 }
 
@@ -49,7 +48,7 @@ const MyStack = () => {
         <Stack.Screen
         name="AddData"
         component={AddData}
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
        <Stack.Screen
         name="Content"
