@@ -14,20 +14,24 @@ import {
 class Content extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      lineCount:1,
+      viewNote:"View Full Note"
+    }
   }
 
   componentDidMount() {}
 
-  dateModifier = () => {
-    this.props.route.params.content.forEach(item => {
-      console.log(item);
-      let onlyDate = item.createdDate.slice(0, 10);
-      let onlyDateReplace = onlyDate.split('-');
+  // dateModifier = () => {
+  //   this.props.route.params.content.forEach(item => {
+  //     console.log(item);
+  //     let onlyDate = item.createdDate.slice(0, 10);
+  //     let onlyDateReplace = onlyDate.split('-');
 
-      console.log(onlyDate);
-      console.log(onlyDateReplace);
-    });
-  };
+  //     console.log(onlyDate);
+  //     console.log(onlyDateReplace);
+  //   });
+  // };
 
   render() {
     const {route} = this.props;
@@ -49,7 +53,19 @@ class Content extends React.Component {
                   <Text style={{color: 'blue'}}> at </Text>
                   {item.createdDate.slice(11, 19)}
                 </Text>
-                <Text style={{marginTop: 20,color:"blue"}}>{item.data}</Text>
+                <Text numberOfLines={this.state.lineCount} style={{marginTop: 20,color:"blue"}}>{item.data}</Text>
+                <TouchableOpacity
+                onPress={()=>{
+                  this.setState({
+                    lineCount:0,
+                    viewNote:""
+                  })
+                }}
+                >
+                  <Text>
+                   {this.state.viewNote}
+                  </Text>
+                </TouchableOpacity>
               </View>
             );
           }}

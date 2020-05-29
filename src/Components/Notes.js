@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import {imageConstants} from '../Config/constant';
 
@@ -18,32 +18,44 @@ class Notes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count:0
+      count: 0,
+      loading: false,
     };
   }
 
-componentDidMount(){
-  console.log("I am cdm",this.props.loginId);
-    this.props.displayDataList(this.props.loginId)
-}
+  componentDidMount() {
+    console.log('I am cdm', this.props.loginId);
+    this.props.displayDataList(this.props.loginId);
+  }
 
-
-groupTitle=()=>{
-  
-    var apiData=this.props.data.response
-   var result = apiData.reduce(function (r, a) {
+  groupTitle = () => {
+    if (!this.props.data.response) {
+      () => {
+        this.setState({
+          loading: true,
+        });
+      };
+    } else {
+      var apiData = this.props.data.response;
+      var result = apiData.reduce(function(r, a) {
         r[a.title] = r[a.title] || [];
         r[a.title].push(a);
         return r;
-    }, Object.create(null));
-console.log("Grouped",result.Personal)    
-return result
-
-}
-
+      }, Object.create(null));
+      console.log('Grouped', result.Personal);
+      return result;
+    }
+  };
 
   render() {
-     console.log("Data inside Notes App",this.props.data.response)
+    console.log(
+      'Data inside Notes App',
+      this.props.data.response,
+      this.groupTitle(),
+    );
+    if (this.state.loading) {
+      return <ActivityIndicator size="large" color="#0000ff" />;
+    }
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.hamburgerView}>
@@ -71,79 +83,94 @@ return result
         <View style={styles.textView}>
           <Text style={styles.textStyle}>
             My <Text style={styles.textStyle}>Notes</Text>
-           
           </Text>
         </View>
 
-
-          <View style={{marginLeft:30,marginTop:40}}>
+        <View style={{marginLeft: 30, marginTop: 40}}>
           <View style={styles.titleView}>
-          <TouchableOpacity
-          onPress={()=>{
-            this.props.navigation.navigate('Content',{
-              content:this.groupTitle().Personal,
-              title:"Personal"
-            })
-          }}
-          >
-          <Text style={styles.fontStyle}>Personal</Text>
-          </TouchableOpacity>
-        {/* <Text>{dataArray.Personal.length}</Text> */}
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('Content', {
+                  content: this.groupTitle().Personal,
+                  title: 'Personal',
+                });
+              }}>
+              <Text style={styles.fontStyle}>Personal</Text>
+            </TouchableOpacity>
+            <View style={{marginRight: 30}}>
+              {this.groupTitle() ? (
+                <Text style={styles.fontStyle}>
+                  {this.groupTitle().Personal.length}
+                </Text>
+              ) : (
+                <Text>undefined</Text>
+              )}
+            </View>
           </View>
-          
-          <View style={styles.titleView}>
-          <TouchableOpacity
-          onPress={()=>{
-            this.props.navigation.navigate('Content',{
-              content:this.groupTitle().Work,
-              title:"Work"
-            })
-          }}
-          >
-          <Text style={styles.fontStyle}>Work</Text>
-          </TouchableOpacity>
-        {/* <Text>{dataArray.Work.length}</Text> */}
-          </View>  
-          
-          <View style={styles.titleView}>
-          <TouchableOpacity
-          onPress={()=>{
-            this.props.navigation.navigate('Content',{
-              content:this.groupTitle().Ideas,
-              title:"Ideas"
-            })
-          }}
-          >
-          
-          <Text style={styles.fontStyle}>Ideas</Text>
-          </TouchableOpacity>
-        {/* <Text>{dataArray.Work.length}</Text> */}
-          </View>  
 
           <View style={styles.titleView}>
-          <TouchableOpacity
-          onPress={()=>{
-            this.props.navigation.navigate('Content',{
-              content:this.groupTitle().Lists,
-              title:"Lists"
-            })
-          }}
-          >
-          
-          <Text style={styles.fontStyle}>Lists</Text>
-          </TouchableOpacity>
-        {/* <Text>{dataArray.Work.length}</Text> */}
-          </View>  
-          
-          
-          
-          
-            
-                   
-                   
-
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('Content', {
+                  content: this.groupTitle().Work,
+                  title: 'Work',
+                });
+              }}>
+              <Text style={styles.fontStyle}>Work</Text>
+            </TouchableOpacity>
+            <View style={{marginRight: 30}}>
+              {this.groupTitle() ? (
+                <Text style={styles.fontStyle}>
+                  {this.groupTitle().Work.length}
+                </Text>
+              ) : (
+                <Text>undefined</Text>
+              )}
+            </View>
           </View>
-        
+
+          <View style={styles.titleView}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('Content', {
+                  content: this.groupTitle().Ideas,
+                  title: 'Ideas',
+                });
+              }}>
+              <Text style={styles.fontStyle}>Ideas</Text>
+            </TouchableOpacity>
+            <View style={{marginRight: 30}}>
+              {this.groupTitle() ? (
+                <Text style={styles.fontStyle}>
+                  {this.groupTitle().Ideas.length}
+                </Text>
+              ) : (
+                <Text>undefined</Text>
+              )}
+            </View>
+          </View>
+
+          <View style={styles.titleView}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('Content', {
+                  content: this.groupTitle().Lists,
+                  title: 'Lists',
+                });
+              }}>
+              <Text style={styles.fontStyle}>Lists</Text>
+            </TouchableOpacity>
+            <View style={{marginRight: 30}}>
+              {this.groupTitle() ? (
+                <Text style={styles.fontStyle}>
+                  {this.groupTitle().Personal.length}
+                </Text>
+              ) : (
+                <Text>undefined</Text>
+              )}
+            </View>
+          </View>
+        </View>
       </SafeAreaView>
     );
   }
@@ -152,7 +179,7 @@ return result
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"white"
+    backgroundColor: 'white',
   },
   hamburgerView: {
     flexDirection: 'row',
@@ -178,27 +205,25 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: '900',
   },
-  titleView:{
-    marginTop:55,
-    flexDirection:"row",
-    justifyContent:"space-between"
+  titleView: {
+    marginTop: 55,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  fontStyle:{color:"blue",fontSize:35,fontWeight:"bold"}
+  fontStyle: {color: 'blue', fontSize: 35, fontWeight: 'bold'},
 });
 
-
 const mapStateToProps = state => ({
-    loginId:state.loginReducer.loginId,
-    data:state.displayReducer.displayData,
-    loadingData:state.displayReducer.loadingData
-  });
-  
-  const mapDispatchToProps = {
-    displayDataList: displayData,
-  };
-  
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(Notes);
+  loginId: state.loginReducer.loginId,
+  data: state.displayReducer.displayData,
+  loadingData: state.displayReducer.loadingData,
+});
 
+const mapDispatchToProps = {
+  displayDataList: displayData,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Notes);
