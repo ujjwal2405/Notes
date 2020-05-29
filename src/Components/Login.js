@@ -22,6 +22,7 @@ import {loginData} from '../Services/Login/action';
 import {socialData} from '../Services/SocialLogin/action'
 import {imageConstants} from '../Config/constant';
 
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -122,7 +123,10 @@ class Login extends React.Component {
               this.state.password,
               (status) => {
                 if (status) {
-                  this.props.props.navigation.navigate('Notes');
+                  setTimeout(()=>{
+                    this.props.props.navigation.navigate('Notes')
+                  },1000)
+                  ;
                 } else {
                   Alert.alert('Error', 'Wrong Credentials');
                 }

@@ -6,7 +6,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  ActivityIndicator
 } from 'react-native';
 import {imageConstants} from '../Config/constant';
 
@@ -16,21 +17,28 @@ import {displayData} from '../Services/Notes/action';
 class Notes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      count:0
+    };
   }
 
-// componentDidMount(){
-//     this.props.displayDataList(this.props.loginId)
-// }
+componentDidMount(){
+  console.log("I am cdm",this.props.loginId);
+    this.props.displayDataList(this.props.loginId)
+}
+
 
 groupTitle=()=>{
+  
     var apiData=this.props.data.response
    var result = apiData.reduce(function (r, a) {
         r[a.title] = r[a.title] || [];
         r[a.title].push(a);
         return r;
     }, Object.create(null));
-console.log("Grouped",result)
+console.log("Grouped",result.Personal)    
+return result
+
 }
 
 
@@ -60,20 +68,6 @@ console.log("Grouped",result)
             </View>
           </TouchableOpacity>
         </View>
-
-            <TouchableOpacity
-            onPress={()=>{
-                this.props.displayDataList(this.props.loginId),this.groupTitle()
-            }}
-            >
-
-            <Text>
-                Display Data
-            </Text>
-
-            </TouchableOpacity>
-
-
         <View style={styles.textView}>
           <Text style={styles.textStyle}>
             My <Text style={styles.textStyle}>Notes</Text>
@@ -82,7 +76,7 @@ console.log("Grouped",result)
         </View>
 
 
-        <FlatList
+        {/* <FlatList
             data={this.props.data.response}
             renderItem={({item}) => {
               return (
@@ -106,7 +100,71 @@ console.log("Grouped",result)
               );
             }}
             keyExtractor={item => item.id}
-          />
+          /> */}
+
+          <View style={{marginLeft:30,marginTop:40}}>
+          <View style={styles.titleView}>
+          <TouchableOpacity
+          onPress={()=>{
+            this.props.navigation.navigate('Content',{
+              content:this.groupTitle().Personal
+            })
+          }}
+          >
+          <Text style={styles.fontStyle}>Personal</Text>
+          </TouchableOpacity>
+        {/* <Text>{dataArray.Personal.length}</Text> */}
+          </View>
+          
+          <View style={styles.titleView}>
+          <TouchableOpacity
+          onPress={()=>{
+            this.props.navigation.navigate('Content',{
+              content:this.groupTitle().Work
+            })
+          }}
+          >
+          <Text style={styles.fontStyle}>Work</Text>
+          </TouchableOpacity>
+        {/* <Text>{dataArray.Work.length}</Text> */}
+          </View>  
+          
+          <View style={styles.titleView}>
+          <TouchableOpacity
+          onPress={()=>{
+            this.props.navigation.navigate('Content',{
+              content:this.groupTitle().Ideas
+            })
+          }}
+          >
+          
+          <Text style={styles.fontStyle}>Ideas</Text>
+          </TouchableOpacity>
+        {/* <Text>{dataArray.Work.length}</Text> */}
+          </View>  
+
+          <View style={styles.titleView}>
+          <TouchableOpacity
+          onPress={()=>{
+            this.props.navigation.navigate('Content',{
+              content:this.groupTitle().Lists
+            })
+          }}
+          >
+          
+          <Text style={styles.fontStyle}>Lists</Text>
+          </TouchableOpacity>
+        {/* <Text>{dataArray.Work.length}</Text> */}
+          </View>  
+          
+          
+          
+          
+            
+                   
+                   
+
+          </View>
         
       </SafeAreaView>
     );
@@ -134,7 +192,7 @@ const styles = StyleSheet.create({
   },
   textView: {
     justifyContent: 'center',
-    marginTop: 60,
+    marginTop: 30,
     alignItems: 'center',
   },
   textStyle: {
@@ -142,12 +200,19 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: '900',
   },
+  titleView:{
+    marginTop:55,
+    flexDirection:"row",
+    justifyContent:"space-between"
+  },
+  fontStyle:{color:"blue",fontSize:35,fontWeight:"bold"}
 });
 
 
 const mapStateToProps = state => ({
     loginId:state.loginReducer.loginId,
-    data:state.displayReducer.displayData
+    data:state.displayReducer.displayData,
+    loadingData:state.displayReducer.loadingData
   });
   
   const mapDispatchToProps = {

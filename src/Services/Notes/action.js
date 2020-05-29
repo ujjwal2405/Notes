@@ -1,4 +1,4 @@
-import {DISPLAY_DATA} from './constant'
+import {DISPLAY_DATA,FETCH_DATA} from './constant'
 
 import config from '../../Config/env';
     
@@ -6,6 +6,9 @@ let addDataApi=config.apiConfig.addDataApi
 
 export const displayData = (loginId) => dispatch => {
     console.log("Login Id in action of notes",loginId)
+    dispatch({
+      type:FETCH_DATA
+  })
     fetch(
       addDataApi+loginId,
       {

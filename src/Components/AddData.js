@@ -19,13 +19,15 @@ class AddData extends React.Component {
     this.state = {
         title:"",
         data:"",
-        message:""
+        message:"",
+        count:0
     };
   }
 
   render() {
       const {title,data}=this.state
       const {loginId}=this.props
+     
     return (
       <SafeAreaView style={{flex: 1}}>
         <TouchableOpacity
