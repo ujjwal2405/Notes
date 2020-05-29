@@ -4,7 +4,7 @@ import config from '../../Config/env';
 
 let signupApi=config.apiConfig.addUserApi
 
-export const signupData = (email,username,password,phoneNumber) => dispatch => {
+export const signupData = (email,username,password,phoneNumber,callback) => dispatch => {
    fetch(
       signupApi,
       {
@@ -23,9 +23,15 @@ export const signupData = (email,username,password,phoneNumber) => dispatch => {
       })
       .then(responseJson => {
           console.log("response of SIgnup data",responseJson)
-        dispatch({
-          type: SIGNUP_DATA,
-          data: responseJson,
-        });
+          if (responseJson.status === false) {
+            callback && callback(false, responseJson, null);
+          } else {
+            callback && callback(true, responseJson, null);
+            console.log('true');
+            dispatch({
+              type: SIGNUP_DATA,
+              data:responseJson,
+            });
+          }
       });
   };

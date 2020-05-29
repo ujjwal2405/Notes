@@ -56,6 +56,12 @@ const MyStack = () => {
       
       />
 
+<Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
+      />
+
 
     
     

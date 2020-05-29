@@ -31,7 +31,7 @@ class SignUp extends React.Component {
     }
   }
 
-  validate(text, type) {
+  validateCreds(text, type) {
     var userNameRegex = /^\S{4,}$/;
     var passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
     var emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
@@ -77,20 +77,20 @@ class SignUp extends React.Component {
 
         <View style={[styles.credentialView,{borderBottomColor:this.state.emailValidation?"grey":"red"}]}>
           <TextInput placeholder="Email Address" 
-           onChangeText={txt => this.validate(txt,'email')}
+           onChangeText={txt => this.validateCreds(txt,'email')}
 
           />
         </View>
 
         <View style={[styles.credentialView,{borderBottomColor:this.state.usernameValidation?"grey":"red"}]}>
           <TextInput placeholder="Username" 
-          onChangeText={txt => this.validate(txt,'username')}
+          onChangeText={txt => this.validateCreds(txt,'username')}
           />
         </View>
 
         <View style={[styles.passwordView,{borderBottomColor:this.state.passwordValidation?"grey":"red"}]}>
           <TextInput placeholder="Password" secureTextEntry={this.state.secure} 
-          onChangeText={txt => this.validate(txt,'password')}
+          onChangeText={txt => this.validateCreds(txt,'password')}
           style={{width:"100%"}}
           />
 
@@ -133,7 +133,14 @@ class SignUp extends React.Component {
                 this.state.email,
                 this.state.username,
                 this.state.password,
-                this.state.phoneNumber
+                this.state.phoneNumber,
+                (status)=>{
+                  if (status) {
+                   Alert.alert("Signup Successful","Move to login Screen")
+                  } else {
+                    Alert.alert('Error', 'Wrong Login Credentials');
+                  }
+                }
               )
             }}
             >
