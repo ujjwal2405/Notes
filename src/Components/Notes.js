@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {imageConstants} from '../Config/constant';
-
+import { useIsFocused } from '@react-navigation/native'
 import {connect} from 'react-redux';
 import {displayData} from '../Services/Notes/action';
 
@@ -26,7 +27,9 @@ class Notes extends React.Component {
   componentDidMount() {
     console.log('I am cdm', this.props.loginId);
     this.props.displayDataList(this.props.loginId);
+    
   }
+ 
 
   groupTitle = () => {
     if (!this.props.data.response) {
@@ -46,6 +49,13 @@ class Notes extends React.Component {
       return result;
     }
   };
+  Profile=()=>{
+    const isFocused = useIsFocused()
+    return <Text>{isFocused ?()=>{ this.setState({
+      count:this.state.count+1
+    })}:"hi"}</Text>
+  }
+
 
   render() {
     console.log(
@@ -57,6 +67,7 @@ class Notes extends React.Component {
       return <ActivityIndicator size="large" color="#0000ff" />;
     }
     return (
+      
       <SafeAreaView style={styles.container}>
         <View style={styles.hamburgerView}>
           <TouchableOpacity
@@ -96,6 +107,7 @@ class Notes extends React.Component {
                 });
               }}>
               <Text style={styles.fontStyle}>Personal</Text>
+              <this.Profile/>
             </TouchableOpacity>
             <View style={{marginRight: 30}}>
               {this.groupTitle() ? (
@@ -227,3 +239,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Notes);
+
+
