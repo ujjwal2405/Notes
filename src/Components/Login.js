@@ -16,9 +16,11 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+import { LoginButton, AccessToken } from 'react-native-fbsdk'
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {connect} from 'react-redux';
-import {loginData} from '../Services/Login/action';
+import {loginData,sessionId} from '../Services/Login/action';
 import {socialData} from '../Services/SocialLogin/action'
 import {imageConstants} from '../Config/constant';
 
@@ -66,11 +68,33 @@ class Login extends React.Component {
     }
   };
 
+
+  isUserLoggedIn = () => {
+    console.log('Props before rendering: ', this.props);
+    // AsyncStorage.getItem('username').then(value => {
+    //   console.log('username in ASYNC', value);
+    //   this.props.setUserName(value);
+    // });
+    AsyncStorage.getItem('token').then(value => {
+      console.log('token is', value);
+
+      if (value != null) {
+        this.props.sessionId(value)
+        setTimeout(()=>{
+          this.props.props.navigation.navigate('Notes')
+        },1000)
+        alert('Welcome Back User!');
+      } else {
+      }
+    });
+  };
+
   componentDidMount(){
     GoogleSignin.configure({
      
       webClientId: '410761975330-1nn0h3ek43n7nktm17q8ltv166i511u6.apps.googleusercontent.com'
     })
+    this.isUserLoggedIn();
   }
 
   render() {
@@ -125,7 +149,7 @@ class Login extends React.Component {
                 if (status) {
                   setTimeout(()=>{
                     this.props.props.navigation.navigate('Notes')
-                  },1000)
+                  },100)
                   ;
                 } else {
                   Alert.alert('Error', 'Wrong Credentials');
@@ -155,6 +179,29 @@ class Login extends React.Component {
       this.signIn()
     }}
     disabled={this.state.isSigninInProgress} />
+
+
+
+<LoginButton
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                console.log("login has error: " + result.error);
+              } else if (result.isCancelled) {
+                console.log("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    console.log(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => console.log("logout.")}/>
+
+
+
         </View>
         
       </SafeAreaView>
@@ -240,7 +287,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loginList: loginData,
-  socialData:socialData
+  socialData:socialData,
+  sessionId:sessionId
 };
 
 export default connect(

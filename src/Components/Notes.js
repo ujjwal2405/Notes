@@ -11,9 +11,11 @@ import {
   Alert,
 } from 'react-native';
 import {imageConstants} from '../Config/constant';
-import { useIsFocused } from '@react-navigation/native'
+import {useIsFocused} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {displayData} from '../Services/Notes/action';
+
+import AsyncStorage from '@react-native-community/async-storage'
 
 class Notes extends React.Component {
   constructor(props) {
@@ -27,9 +29,29 @@ class Notes extends React.Component {
   componentDidMount() {
     console.log('I am cdm', this.props.loginId);
     this.props.displayDataList(this.props.loginId);
-    
+
+
+
+    try {
+      AsyncStorage.setItem('token', this.props.loginId);
+
+      // AsyncStorage.setItem('username', this.props.username);
+    } catch {
+      console.log('Failed to save the data to the storage');
+    }
+  
+
   }
- 
+  
+ Logout= async()=>{
+    await AsyncStorage.clear();
+
+    setTimeout(() => {
+      this.setState({loader: false});
+      this.props.navigation.navigate('Login');
+      //alert('You have been Logged Out Successfully');
+    }, 1000);
+  }
 
   groupTitle = () => {
     if (!this.props.data.response) {
@@ -49,13 +71,8 @@ class Notes extends React.Component {
       return result;
     }
   };
-  Profile=()=>{
-    const isFocused = useIsFocused()
-    return <Text>{isFocused ?()=>{ this.setState({
-      count:this.state.count+1
-    })}:"hi"}</Text>
-  }
 
+ 
 
   render() {
     console.log(
@@ -63,12 +80,23 @@ class Notes extends React.Component {
       this.props.data.response,
       this.groupTitle(),
     );
+    const groupedArray=this.groupTitle()
     if (this.state.loading) {
       return <ActivityIndicator size="large" color="#0000ff" />;
     }
     return (
-      
       <SafeAreaView style={styles.container}>
+
+<TouchableOpacity
+onPress={()=>{
+ this.Logout()
+}}
+>
+  <Text>
+    Logout
+  </Text>
+</TouchableOpacity>
+
         <View style={styles.hamburgerView}>
           <TouchableOpacity
             onPress={() => {
@@ -97,25 +125,25 @@ class Notes extends React.Component {
           </Text>
         </View>
 
-        <View style={{marginLeft: 30, marginTop: 40}}>
+        <View style={styles.parentTitleView}>
           <View style={styles.titleView}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('Content', {
-                  content: this.groupTitle().Personal,
+                  content: groupedArray.Personal,
                   title: 'Personal',
                 });
               }}>
               <Text style={styles.fontStyle}>Personal</Text>
-              <this.Profile/>
+              {/* <this.Profile/> */}
             </TouchableOpacity>
-            <View style={{marginRight: 30}}>
-              {this.groupTitle() ? (
+            <View style={styles.lengthView}>
+              {groupedArray? (
                 <Text style={styles.fontStyle}>
-                  {this.groupTitle().Personal.length}
+                  {groupedArray.Personal.length}
                 </Text>
               ) : (
-                <Text>undefined</Text>
+                <Text />
               )}
             </View>
           </View>
@@ -124,19 +152,19 @@ class Notes extends React.Component {
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('Content', {
-                  content: this.groupTitle().Work,
+                  content: groupedArray.Work,
                   title: 'Work',
                 });
               }}>
               <Text style={styles.fontStyle}>Work</Text>
             </TouchableOpacity>
-            <View style={{marginRight: 30}}>
-              {this.groupTitle() ? (
+            <View style={styles.lengthView}>
+              {groupedArray ? (
                 <Text style={styles.fontStyle}>
-                  {this.groupTitle().Work.length}
+                  {groupedArray.Work.length}
                 </Text>
               ) : (
-                <Text>undefined</Text>
+                <Text />
               )}
             </View>
           </View>
@@ -145,19 +173,19 @@ class Notes extends React.Component {
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('Content', {
-                  content: this.groupTitle().Ideas,
+                  content: groupedArray.Ideas,
                   title: 'Ideas',
                 });
               }}>
               <Text style={styles.fontStyle}>Ideas</Text>
             </TouchableOpacity>
-            <View style={{marginRight: 30}}>
-              {this.groupTitle() ? (
+            <View style={styles.lengthView}>
+              {groupedArray? (
                 <Text style={styles.fontStyle}>
-                  {this.groupTitle().Ideas.length}
+                  {groupedArray.Ideas.length}
                 </Text>
               ) : (
-                <Text>undefined</Text>
+                <Text />
               )}
             </View>
           </View>
@@ -166,19 +194,19 @@ class Notes extends React.Component {
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('Content', {
-                  content: this.groupTitle().Lists,
+                  content: groupedArray.Lists,
                   title: 'Lists',
                 });
               }}>
               <Text style={styles.fontStyle}>Lists</Text>
             </TouchableOpacity>
-            <View style={{marginRight: 30}}>
-              {this.groupTitle() ? (
+            <View style={styles.lengthView}>
+              {groupedArray ? (
                 <Text style={styles.fontStyle}>
-                  {this.groupTitle().Personal.length}
+                  {groupedArray.Lists.length}
                 </Text>
               ) : (
-                <Text>undefined</Text>
+                <Text />
               )}
             </View>
           </View>
@@ -222,7 +250,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  fontStyle: {color: 'blue', fontSize: 35, fontWeight: 'bold'},
+  fontStyle: {
+    color: 'blue',
+    fontSize: 35,
+    fontWeight: 'bold',
+  },
+  lengthView: {marginRight: 30},
+  parentTitleView: {marginLeft: 30, marginTop: 40},
 });
 
 const mapStateToProps = state => ({
@@ -239,5 +273,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Notes);
-
-

@@ -1,4 +1,4 @@
-import {LOGIN_FAIL,LOGIN_START,LOGIN_SUCCESS} from './constant';
+import {LOGIN_FAIL,LOGIN_START,LOGIN_SUCCESS,SESSION_ID} from './constant';
 
 import config from '../../Config/env';
 
@@ -41,5 +41,11 @@ if(responseJson.status==false){
 });
 };
 
+export const sessionId =(value)=>dispatch =>{
+dispatch({
+  type:SESSION_ID,
+  data:value
+})
+}
 
 

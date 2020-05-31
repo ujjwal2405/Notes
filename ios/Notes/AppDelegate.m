@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 @import Firebase;
 
+
 #if DEBUG
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -46,6 +47,9 @@ static void InitializeFlipper(UIApplication *application) {
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [FIRApp configure];
+  
+  
+  
   return YES;
 }
 

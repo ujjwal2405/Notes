@@ -1,4 +1,4 @@
-import {LOGIN_START,LOGIN_SUCCESS,LOGIN_FAIL} from './constant';
+import {LOGIN_START,LOGIN_SUCCESS,LOGIN_FAIL, SESSION_ID} from './constant';
 
 const initialState={
     loading:false,
@@ -19,6 +19,11 @@ const loginReducer = (state=initialState , action ={}) =>{
         case LOGIN_FAIL:{
             return{...state,loginSuccess:false}
         }
+
+        case SESSION_ID:{
+            return{...state,loginId:action.data}
+        }
+
         default:
             return state;
     }

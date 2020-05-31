@@ -4,67 +4,65 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  Image,
-  TextInput,
   TouchableOpacity,
   Alert,
   FlatList,
+  Animated,
 } from 'react-native';
-
+import {connect} from 'react-redux';
+import {deleteData} from '../Services/Delete/action';
 class Content extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      lineCount:1,
-      viewNote:"View Full Note"
-    }
+    this.opacity = new Animated.Value(0);
+    this.state = {
+      lineCount: 1,
+      viewNote: 'View Full Note',
+    };
   }
 
-  componentDidMount() {}
-
-  // dateModifier = () => {
-  //   this.props.route.params.content.forEach(item => {
-  //     console.log(item);
-  //     let onlyDate = item.createdDate.slice(0, 10);
-  //     let onlyDateReplace = onlyDate.split('-');
-
-  //     console.log(onlyDate);
-  //     console.log(onlyDateReplace);
-  //   });
-  // };
+  componentDidMount() {
+    Animated.timing(this.opacity, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  }
 
   render() {
     const {route} = this.props;
-    console.log('Content Screen', route.params.content[0].createdDate);
+    console.log('Content Screen', route.params);
     return (
       <SafeAreaView style={styles.container}>
-       <View style={{marginTop:30,marginLeft:30}}>
-    <Text style={{color:"red",fontSize:50,fontWeight:"900"}}>{route.params.title}</Text>
-       </View>
+        <View style={styles.titleView}>
+          <Animated.Text style={{opacity: this.opacity}}>
+            <Text style={styles.textStyle}>{route.params.title}</Text>
+          </Animated.Text>
+        </View>
         <FlatList
           data={route.params.content}
-          style={{marginTop:25}}
+          style={styles.flatList}
           renderItem={({item}) => {
             return (
-
               <View style={styles.dataView}>
-                <Text style={{color: 'red',fontWeight:"bold"}}>
+                <Text style={styles.dateText}>
                   Created on {item.createdDate.slice(0, 10)}{' '}
-                  <Text style={{color: 'blue'}}> at </Text>
+                  <Text style={styles.timeText}> at </Text>
                   {item.createdDate.slice(11, 19)}
                 </Text>
-                <Text numberOfLines={this.state.lineCount} style={{marginTop: 20,color:"blue"}}>{item.data}</Text>
+                <Text
+                  numberOfLines={this.state.lineCount}
+                  style={styles.noteDataText}>
+                  {item.data}
+                </Text>
+
                 <TouchableOpacity
-                onPress={()=>{
-                  this.setState({
-                    lineCount:0,
-                    viewNote:""
-                  })
-                }}
-                >
-                  <Text>
-                   {this.state.viewNote}
-                  </Text>
+                  onPress={() => {
+                    this.props.deleteData(this.props.loginId, item.id);
+                  }}>
+                  <View style={styles.deleteView}>
+                    <Text>Delete</Text>
+                  </View>
                 </TouchableOpacity>
               </View>
             );
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginHorizontal: 35,
     marginTop: 20,
-    borderRadius:40/2,
+    borderRadius: 40 / 2,
 
     shadowColor: '#000',
     shadowOffset: {
@@ -106,5 +104,80 @@ const styles = StyleSheet.create({
     elevation: 15,
     backgroundColor: 'white',
   },
+  titleView: {
+    marginTop: 30,
+    marginLeft: 30,
+  },
+  textStyle: {
+    color: 'red',
+    fontSize: 50,
+    fontWeight: '900',
+  },
+  dateText: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
+  timeText: {
+    color: 'blue',
+  },
+  noteDataText: {
+    marginTop: 20,
+    color: 'blue',
+  },
+  deletteView: {
+    marginTop: 20,
+  },
+  flatList: {
+    marginTop: 25,
+  },
 });
-export default Content;
+const mapStateToProps = state => ({
+  loginId: state.loginReducer.loginId,
+});
+
+const mapDispatchToProps = {
+  deleteData: deleteData,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Content);
+
+// dateModifier = () => {
+//   this.props.route.params.content.forEach(item => {
+//     console.log(item);
+//     let onlyDate = item.createdDate.slice(0, 10);
+//     let onlyDateReplace = onlyDate.split('-');
+
+//     console.log(onlyDate);
+//     console.log(onlyDateReplace);
+//   });
+// };
+
+{
+  /* <TouchableOpacity
+onPress={()=>{
+  this.props.navigation.navigate('Notes')
+}}
+>
+  <Text>
+    Backk
+  </Text>
+</TouchableOpacity> */
+}
+
+{
+  /* <TouchableOpacity
+                onPress={()=>{
+                  this.setState({
+                    lineCount:0,
+                    viewNote:""
+                  })
+                }}
+                >
+                  <Text>
+                   {this.state.viewNote}
+                  </Text>
+                </TouchableOpacity> */
+}
