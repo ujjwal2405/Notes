@@ -15,7 +15,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {displayData} from '../Services/Notes/action';
 
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Notes extends React.Component {
   constructor(props) {
@@ -30,8 +30,6 @@ class Notes extends React.Component {
     console.log('I am cdm', this.props.loginId);
     this.props.displayDataList(this.props.loginId);
 
-
-
     try {
       AsyncStorage.setItem('token', this.props.loginId);
 
@@ -39,11 +37,9 @@ class Notes extends React.Component {
     } catch {
       console.log('Failed to save the data to the storage');
     }
-  
-
   }
-  
- Logout= async()=>{
+
+  Logout = async () => {
     await AsyncStorage.clear();
 
     setTimeout(() => {
@@ -51,7 +47,7 @@ class Notes extends React.Component {
       this.props.navigation.navigate('Login');
       //alert('You have been Logged Out Successfully');
     }, 1000);
-  }
+  };
 
   groupTitle = () => {
     if (!this.props.data.response) {
@@ -72,31 +68,18 @@ class Notes extends React.Component {
     }
   };
 
- 
-
   render() {
     console.log(
       'Data inside Notes App',
       this.props.data.response,
       this.groupTitle(),
     );
-    const groupedArray=this.groupTitle()
+    const groupedArray = this.groupTitle();
     if (this.state.loading) {
       return <ActivityIndicator size="large" color="#0000ff" />;
     }
     return (
       <SafeAreaView style={styles.container}>
-
-<TouchableOpacity
-onPress={()=>{
- this.Logout()
-}}
->
-  <Text>
-    Logout
-  </Text>
-</TouchableOpacity>
-
         <View style={styles.hamburgerView}>
           <TouchableOpacity
             onPress={() => {
@@ -138,7 +121,7 @@ onPress={()=>{
               {/* <this.Profile/> */}
             </TouchableOpacity>
             <View style={styles.lengthView}>
-              {groupedArray? (
+              {groupedArray ? (
                 <Text style={styles.fontStyle}>
                   {groupedArray.Personal.length}
                 </Text>
@@ -160,9 +143,7 @@ onPress={()=>{
             </TouchableOpacity>
             <View style={styles.lengthView}>
               {groupedArray ? (
-                <Text style={styles.fontStyle}>
-                  {groupedArray.Work.length}
-                </Text>
+                <Text style={styles.fontStyle}>{groupedArray.Work.length}</Text>
               ) : (
                 <Text />
               )}
@@ -180,7 +161,7 @@ onPress={()=>{
               <Text style={styles.fontStyle}>Ideas</Text>
             </TouchableOpacity>
             <View style={styles.lengthView}>
-              {groupedArray? (
+              {groupedArray ? (
                 <Text style={styles.fontStyle}>
                   {groupedArray.Ideas.length}
                 </Text>
@@ -211,6 +192,17 @@ onPress={()=>{
             </View>
           </View>
         </View>
+
+        <View
+          style={styles.logoutImage}>
+          <TouchableOpacity
+            onPress={() => {
+              this.Logout();
+            }}>
+            <Image source={imageConstants.logout} />
+          </TouchableOpacity>
+          <Text style={styles.logoutText}>Log Out</Text>
+        </View>
       </SafeAreaView>
     );
   }
@@ -231,6 +223,7 @@ const styles = StyleSheet.create({
   hamburgerImage: {
     height: 30,
     width: 30,
+    marginTop:10
   },
   plusImage: {
     marginRight: 20,
@@ -257,7 +250,15 @@ const styles = StyleSheet.create({
   },
   lengthView: {marginRight: 30},
   parentTitleView: {marginLeft: 30, marginTop: 40},
-});
+  logoutImage:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 55,
+  },
+  logoutText:{
+    marginTop:15,color:"blue",fontSize:25
+  }
+}); 
 
 const mapStateToProps = state => ({
   loginId: state.loginReducer.loginId,

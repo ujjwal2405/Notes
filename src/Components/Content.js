@@ -8,9 +8,11 @@ import {
   Alert,
   FlatList,
   Animated,
+  Image
 } from 'react-native';
 import {connect} from 'react-redux';
 import {deleteData} from '../Services/Delete/action';
+import {imageConstants} from '../Config/constant';
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -61,7 +63,7 @@ class Content extends React.Component {
                     this.props.deleteData(this.props.loginId, item.id);
                   }}>
                   <View style={styles.deleteView}>
-                    <Text>Delete</Text>
+                  <Image source={imageConstants.delete} />
                   </View>
                 </TouchableOpacity>
               </View>

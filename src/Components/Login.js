@@ -80,10 +80,10 @@ class Login extends React.Component {
 
       if (value != null) {
         this.props.sessionId(value)
-        setTimeout(()=>{
+        //setTimeout(()=>{
           this.props.props.navigation.navigate('Notes')
-        },1000)
-        alert('Welcome Back User!');
+        //},1000)
+     
       } else {
       }
     });

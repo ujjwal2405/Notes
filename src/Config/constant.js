@@ -3,6 +3,7 @@ export const imageConstants = {
     eye:require('../Assets/eye.png'),
     tick:require('../Assets/tick.png'),
     hamburger:require('../Assets/Hamburger.png'),
-    plus:require('../Assets/Plus.png')
-
+    plus:require('../Assets/Plus.png'),
+    logout:require('../Assets/logout.png'),
+    delete:require('../Assets/cross.png')
   };
