@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import {imageConstants} from '../Config/constant';
+import {imageConstants,colorConstants} from '../Config/constant';
 import {useIsFocused} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {displayData} from '../Services/Notes/action';
@@ -103,7 +103,7 @@ class Notes extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.textView}>
-          <Text style={styles.textStyle}>
+          <Text style={styles.textStyleMy}>
             My <Text style={styles.textStyle}>Notes</Text>
           </Text>
         </View>
@@ -211,7 +211,7 @@ class Notes extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colorConstants.white,
   },
   hamburgerView: {
     flexDirection: 'row',
@@ -234,7 +234,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textStyle: {
-    color: 'blue',
+    color: colorConstants.navyBlue,
+    fontSize: 60,
+    fontWeight: '900',
+  },
+  textStyleMy: {
+    color: colorConstants.red,
     fontSize: 60,
     fontWeight: '900',
   },
@@ -244,7 +249,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   fontStyle: {
-    color: 'blue',
+    color: colorConstants.navyBlue,
     fontSize: 35,
     fontWeight: 'bold',
   },
@@ -256,7 +261,7 @@ const styles = StyleSheet.create({
     marginTop: 55,
   },
   logoutText:{
-    marginTop:15,color:"blue",fontSize:25
+    marginTop:15,color:colorConstants.navyBlue,fontSize:25
   }
 }); 
 

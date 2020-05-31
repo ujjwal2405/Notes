@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {deleteData} from '../Services/Delete/action';
-import {imageConstants} from '../Config/constant';
+import {imageConstants,colorConstants} from '../Config/constant';
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -78,11 +78,11 @@ class Content extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colorConstants.white,
   },
   titleStyle: {
     fontSize: 45,
-    color: 'red',
+    color: colorConstants.red,
     fontWeight: '800',
   },
   contentView: {
@@ -104,19 +104,19 @@ const styles = StyleSheet.create({
     shadowRadius: 9.51,
 
     elevation: 15,
-    backgroundColor: 'white',
+    backgroundColor: colorConstants.white
   },
   titleView: {
     marginTop: 30,
     marginLeft: 30,
   },
   textStyle: {
-    color: 'red',
+    color: colorConstants.red,
     fontSize: 50,
     fontWeight: '900',
   },
   dateText: {
-    color: 'red',
+    color: colorConstants.red,
     fontWeight: 'bold',
   },
   timeText: {
@@ -125,8 +125,9 @@ const styles = StyleSheet.create({
   noteDataText: {
     marginTop: 20,
     color: 'blue',
+    fontWeight:"bold"
   },
-  deletteView: {
+  deleteView: {
     marginTop: 20,
   },
   flatList: {

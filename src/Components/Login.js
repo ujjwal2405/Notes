@@ -22,7 +22,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
 import {loginData,sessionId} from '../Services/Login/action';
 import {socialData} from '../Services/SocialLogin/action'
-import {imageConstants} from '../Config/constant';
+import {imageConstants,colorConstants} from '../Config/constant';
 
 
 class Login extends React.Component {
@@ -111,7 +111,7 @@ class Login extends React.Component {
           />
         </View>
 
-        <View style={[styles.credentialView,{borderBottomColor:this.state.usernameValidate?"grey":"red"}]}>
+        <View style={[styles.credentialView,{borderBottomColor:this.state.usernameValidate?colorConstants.grey:colorConstants.red}]}>
           <TextInput
             placeholder="Username"
             onChangeText={text => {
@@ -161,7 +161,7 @@ class Login extends React.Component {
             <Image source={imageConstants.tick} />
             <Text
               style={{
-                color: 'blue',
+                color: colorConstants.navyBlue,
                 marginLeft: 20,
               }}>
               LOG IN
@@ -211,7 +211,7 @@ class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colorConstants.white,
   },
   loginView: {
     marginTop: 40,
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   signupText: {
     marginRight: 40,
-    color: 'grey',
+    color: colorConstants.grey,
     fontSize: 20,
     marginTop: 5,
   },
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 30,
     marginHorizontal: 50,
-    borderBottomColor: 'grey',
+    borderBottomColor: colorConstants.grey,
     borderBottomWidth: 1,
     padding: 10,
     
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
 
     elevation: 3,
-    backgroundColor: 'white',
+    backgroundColor: colorConstants.white,
     marginTop: 20,
     marginHorizontal: 30,
   },
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loginwithText: {
-    color: 'grey',
+    color: colorConstants.grey,
   },
 });
 

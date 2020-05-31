@@ -7,3 +7,11 @@ export const imageConstants = {
     logout:require('../Assets/logout.png'),
     delete:require('../Assets/cross.png')
   };
+
+  export const colorConstants ={
+    white: '#fff',
+    navyBlue: '#373969',
+    red: '#eb2827',
+    grey: '#737373',
+    black: '#000',
+  }
