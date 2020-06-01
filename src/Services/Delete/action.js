@@ -1,5 +1,7 @@
 import {DELETE_DATA} from './constant'
+import config from '../../Config/env';
 
+let signupApi=config.apiConfig.addUserApi
 
 
 export const deleteData = (loginId,noteId) => dispatch => {
@@ -8,7 +10,7 @@ export const deleteData = (loginId,noteId) => dispatch => {
 //       type:FETCH_DATA
 //   })
     fetch(
-        'https://nodejsapp20.herokuapp.com/api/notes/'+loginId+'/'+noteId,
+        signupApi+loginId+'/'+noteId,
       {
         method: 'DELETE',
         headers: {Accept: 'application/json', 'content-type': 'application/json'},
